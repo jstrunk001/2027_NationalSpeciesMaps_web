@@ -1,0 +1,133 @@
+{
+  "cog_build": "v2",
+  "radius_km": 20,
+  "years": [2000, 2023],
+  "n_forest": 162990,
+  "n_nonforest": 238178,
+  "nodata": 255,
+  "col_zero": "#9e9e9e",
+  "forms": [
+    {
+      "form": "Trees",
+      "col_low": "#fde9b5",
+      "col_mid": "#e3873a",
+      "col_high": "#7a2e0b"
+    },
+    {
+      "form": "Shrubs",
+      "col_low": "#f3e5f5",
+      "col_mid": "#8e24aa",
+      "col_high": "#4a148c"
+    },
+    {
+      "form": "Herbs & Forbs",
+      "col_low": "#00b8d4",
+      "col_mid": "#00838f",
+      "col_high": "#003c43"
+    },
+    {
+      "form": "Grasses",
+      "col_low": "#fff9c4",
+      "col_mid": "#fbc02d",
+      "col_high": "#e65100"
+    }
+  ],
+  "species": [
+    {
+      "symbol": "BOGR2",
+      "common": "blue grama",
+      "form": "Grasses",
+      "file": "data/species/BOGR2.tif"
+    },
+    {
+      "symbol": "PSSP6",
+      "common": "bluebunch wheatgrass",
+      "form": "Grasses",
+      "file": "data/species/PSSP6.tif"
+    },
+    {
+      "symbol": "BRTE",
+      "common": "cheatgrass",
+      "form": "Grasses",
+      "file": "data/species/BRTE.tif"
+    },
+    {
+      "symbol": "PAQU",
+      "common": "American ginseng",
+      "form": "Herbs & Forbs",
+      "file": "data/species/PAQU.tif"
+    },
+    {
+      "symbol": "EUES",
+      "common": "leafy spurge",
+      "form": "Herbs & Forbs",
+      "file": "data/species/EUES.tif"
+    },
+    {
+      "symbol": "CESO3",
+      "common": "yellow star-thistle",
+      "form": "Herbs & Forbs",
+      "file": "data/species/CESO3.tif"
+    },
+    {
+      "symbol": "ARTR2",
+      "common": "big sagebrush",
+      "form": "Shrubs",
+      "file": "data/species/ARTR2.tif"
+    },
+    {
+      "symbol": "VAAN",
+      "common": "lowbush blueberry",
+      "form": "Shrubs",
+      "file": "data/species/VAAN.tif"
+    },
+    {
+      "symbol": "VAME",
+      "common": "thinleaf huckleberry",
+      "form": "Shrubs",
+      "file": "data/species/VAME.tif"
+    },
+    {
+      "symbol": "PSME",
+      "common": "Douglas-fir",
+      "form": "Trees",
+      "file": "data/species/PSME.tif"
+    },
+    {
+      "symbol": "JUVI",
+      "common": "eastern redcedar",
+      "form": "Trees",
+      "file": "data/species/JUVI.tif"
+    },
+    {
+      "symbol": "PITA",
+      "common": "loblolly pine",
+      "form": "Trees",
+      "file": "data/species/PITA.tif"
+    },
+    {
+      "symbol": "PIPO",
+      "common": "ponderosa pine",
+      "form": "Trees",
+      "file": "data/species/PIPO.tif"
+    },
+    {
+      "symbol": "PIED",
+      "common": "twoneedle pinyon",
+      "form": "Trees",
+      "file": "data/species/PIED.tif"
+    },
+    {
+      "symbol": "QUAL",
+      "common": "white oak",
+      "form": "Trees",
+      "file": "data/species/QUAL.tif"
+    },
+    {
+      "symbol": "PIAL",
+      "common": "whitebark pine",
+      "form": "Trees",
+      "file": "data/species/PIAL.tif"
+    }
+  ]
+}

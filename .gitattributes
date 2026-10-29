@@ -1,0 +1,2 @@
+# COGs are read byte-by-byte with range requests; never convert them
+*.tif binary

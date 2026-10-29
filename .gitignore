@@ -1,0 +1,11 @@
+# Half-written COGs from an interrupted run of 002e
+*.partial.tif
+
+# R session files
+.Rhistory
+.RData
+.Rproj.user/
+
+# OS cruft
+Thumbs.db
+.DS_Store
