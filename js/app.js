@@ -311,7 +311,6 @@
       },
       counties: {
         title: "County borders",
-        on: true,
         make: function() {
           return fetchJson("data/counties.geojson").then(function(gj) {
             return L.geoJSON(gj, {
