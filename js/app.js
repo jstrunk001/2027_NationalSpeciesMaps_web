@@ -107,6 +107,9 @@
 
   var map = L.map("map", { preferCanvas: true, zoomControl: true }).setView([38.5, -96], 4);
 
+  // reachable from the browser console and from R/check_page.R
+  window.rangeMap = map;
+
   // Drawing order, bottom to top: base map, ecoregions (overlayPane, 400),
   // species, plots, county lines, state lines, labels (markerPane, 600)
   map.createPane("speciesPane").style.zIndex = 410;
@@ -202,15 +205,19 @@
     }
 
     // Read the value of the cell under a map click from the current COG
-    // (Leaflet's web-map projection gives the same meters the COG is in)
+    //  - Leaflet's web-map projection gives the same meters the COG is in
+    //  - getValues() takes a window in pixel columns and rows (not meters),
+    //    counted from the COG's top-left corner, so the click point is
+    //    converted to the column and row of the cell holding it
     function valueAt(georaster, latlng) {
       var p = L.CRS.EPSG3857.project(latlng);
-      if(p.x < georaster.xmin || p.x > georaster.xmax || p.y < georaster.ymin || p.y > georaster.ymax) {
+      var col = Math.floor((p.x - georaster.xmin) / georaster.pixelWidth);
+      var row = Math.floor((georaster.ymax - p.y) / georaster.pixelHeight);
+      if(col < 0 || row < 0 || col >= georaster.width || row >= georaster.height) {
         return Promise.resolve(meta.nodata);
       }
-      var half = georaster.pixelWidth / 2;
       return georaster.getValues({
-        left: p.x - half, right: p.x + half, bottom: p.y - half, top: p.y + half,
+        left: col, top: row, right: col + 1, bottom: row + 1,
         width: 1, height: 1, resampleMethod: "nearest"
       }).then(function(v) { return v[0][0][0]; });
     }
