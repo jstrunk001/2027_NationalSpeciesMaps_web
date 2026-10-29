@@ -49,3 +49,8 @@ then open http://127.0.0.1:8000.
 
 The site is served by GitHub Pages from the `main` branch root. Pushing to
 `main` publishes the changes.
+
+The empty `.nojekyll` file tells GitHub Pages to publish the files exactly
+as they are, without first running its Jekyll site builder over them. This
+site has no Jekyll content, and skipping that step keeps deploys fast as
+the species files grow. Do not remove it.
