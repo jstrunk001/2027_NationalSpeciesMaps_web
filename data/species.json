@@ -1,5 +1,5 @@
 {
-  "cog_build": "v2",
+  "cog_build": "v3",
   "radius_km": 20,
   "years": [2000, 2023],
   "n_forest": 162990,
@@ -34,100 +34,895 @@
   ],
   "species": [
     {
-      "symbol": "BOGR2",
-      "common": "blue grama",
-      "form": "Grasses",
-      "file": "data/species/BOGR2.tif"
-    },
-    {
-      "symbol": "PSSP6",
-      "common": "bluebunch wheatgrass",
-      "form": "Grasses",
-      "file": "data/species/PSSP6.tif"
-    },
-    {
-      "symbol": "BRTE",
-      "common": "cheatgrass",
-      "form": "Grasses",
-      "file": "data/species/BRTE.tif"
-    },
-    {
-      "symbol": "PAQU",
-      "common": "American ginseng",
-      "form": "Herbs & Forbs",
-      "file": "data/species/PAQU.tif"
-    },
-    {
-      "symbol": "EUES",
-      "common": "leafy spurge",
-      "form": "Herbs & Forbs",
-      "file": "data/species/EUES.tif"
-    },
-    {
-      "symbol": "CESO3",
-      "common": "yellow star-thistle",
-      "form": "Herbs & Forbs",
-      "file": "data/species/CESO3.tif"
-    },
-    {
-      "symbol": "ARTR2",
-      "common": "big sagebrush",
-      "form": "Shrubs",
-      "file": "data/species/ARTR2.tif"
-    },
-    {
-      "symbol": "VAAN",
-      "common": "lowbush blueberry",
-      "form": "Shrubs",
-      "file": "data/species/VAAN.tif"
-    },
-    {
-      "symbol": "VAME",
-      "common": "thinleaf huckleberry",
-      "form": "Shrubs",
-      "file": "data/species/VAME.tif"
+      "symbol": "ULAM",
+      "common": "American elm",
+      "scientific": "Ulmus americana",
+      "form": "Trees",
+      "form_detail": "Broadleaf tree",
+      "plot_type": "Tree tally: 24-ft subplots and 6.8-ft microplots",
+      "file": "data/species/ULAM.tif"
     },
     {
       "symbol": "PSME",
       "common": "Douglas-fir",
+      "scientific": "Pseudotsuga menziesii",
       "form": "Trees",
+      "form_detail": "Conifer tree",
+      "plot_type": "Tree tally: 24-ft subplots and 6.8-ft microplots",
       "file": "data/species/PSME.tif"
+    },
+    {
+      "symbol": "JUOS",
+      "common": "Utah juniper",
+      "scientific": "Juniperus osteosperma",
+      "form": "Trees",
+      "form_detail": "Conifer tree",
+      "plot_type": "Tree tally: 24-ft subplots and 6.8-ft microplots",
+      "file": "data/species/JUOS.tif"
+    },
+    {
+      "symbol": "PRSE2",
+      "common": "black cherry",
+      "scientific": "Prunus serotina",
+      "form": "Trees",
+      "form_detail": "Broadleaf tree",
+      "plot_type": "Tree tally: 24-ft subplots and 6.8-ft microplots",
+      "file": "data/species/PRSE2.tif"
+    },
+    {
+      "symbol": "QUVE",
+      "common": "black oak",
+      "scientific": "Quercus velutina",
+      "form": "Trees",
+      "form_detail": "Broadleaf tree",
+      "plot_type": "Tree tally: 24-ft subplots and 6.8-ft microplots",
+      "file": "data/species/QUVE.tif"
+    },
+    {
+      "symbol": "NYSY",
+      "common": "blackgum",
+      "scientific": "Nyssa sylvatica",
+      "form": "Trees",
+      "form_detail": "Broadleaf tree",
+      "plot_type": "Tree tally: 24-ft subplots and 6.8-ft microplots",
+      "file": "data/species/NYSY.tif"
+    },
+    {
+      "symbol": "QUMA2",
+      "common": "bur oak",
+      "scientific": "Quercus macrocarpa",
+      "form": "Trees",
+      "form_detail": "Broadleaf tree",
+      "plot_type": "Tree tally: 24-ft subplots and 6.8-ft microplots",
+      "file": "data/species/QUMA2.tif"
     },
     {
       "symbol": "JUVI",
       "common": "eastern redcedar",
+      "scientific": "Juniperus virginiana",
       "form": "Trees",
+      "form_detail": "Conifer tree",
+      "plot_type": "Tree tally: 24-ft subplots and 6.8-ft microplots",
       "file": "data/species/JUVI.tif"
+    },
+    {
+      "symbol": "FRPE",
+      "common": "green ash",
+      "scientific": "Fraxinus pennsylvanica",
+      "form": "Trees",
+      "form_detail": "Broadleaf tree",
+      "plot_type": "Tree tally: 24-ft subplots and 6.8-ft microplots",
+      "file": "data/species/FRPE.tif"
+    },
+    {
+      "symbol": "OSVI",
+      "common": "hophornbeam",
+      "scientific": "Ostrya virginiana",
+      "form": "Trees",
+      "form_detail": "Broadleaf tree",
+      "plot_type": "Tree tally: 24-ft subplots and 6.8-ft microplots",
+      "file": "data/species/OSVI.tif"
     },
     {
       "symbol": "PITA",
       "common": "loblolly pine",
+      "scientific": "Pinus taeda",
       "form": "Trees",
+      "form_detail": "Conifer tree",
+      "plot_type": "Tree tally: 24-ft subplots and 6.8-ft microplots",
       "file": "data/species/PITA.tif"
+    },
+    {
+      "symbol": "ABPR",
+      "common": "noble fir",
+      "scientific": "Abies procera",
+      "form": "Trees",
+      "form_detail": "Conifer tree",
+      "plot_type": "Tree tally: 24-ft subplots and 6.8-ft microplots",
+      "file": "data/species/ABPR.tif"
+    },
+    {
+      "symbol": "QURU",
+      "common": "northern red oak",
+      "scientific": "Quercus rubra",
+      "form": "Trees",
+      "form_detail": "Broadleaf tree",
+      "plot_type": "Tree tally: 24-ft subplots and 6.8-ft microplots",
+      "file": "data/species/QURU.tif"
+    },
+    {
+      "symbol": "JUMO",
+      "common": "oneseed juniper",
+      "scientific": "Juniperus monosperma",
+      "form": "Trees",
+      "form_detail": "Conifer tree",
+      "plot_type": "Tree tally: 24-ft subplots and 6.8-ft microplots",
+      "file": "data/species/JUMO.tif"
     },
     {
       "symbol": "PIPO",
       "common": "ponderosa pine",
+      "scientific": "Pinus ponderosa",
       "form": "Trees",
+      "form_detail": "Conifer tree",
+      "plot_type": "Tree tally: 24-ft subplots and 6.8-ft microplots",
       "file": "data/species/PIPO.tif"
+    },
+    {
+      "symbol": "POTR5",
+      "common": "quaking aspen",
+      "scientific": "Populus tremuloides",
+      "form": "Trees",
+      "form_detail": "Broadleaf tree",
+      "plot_type": "Tree tally: 24-ft subplots and 6.8-ft microplots",
+      "file": "data/species/POTR5.tif"
+    },
+    {
+      "symbol": "ACRU",
+      "common": "red maple",
+      "scientific": "Acer rubrum",
+      "form": "Trees",
+      "form_detail": "Broadleaf tree",
+      "plot_type": "Tree tally: 24-ft subplots and 6.8-ft microplots",
+      "file": "data/species/ACRU.tif"
+    },
+    {
+      "symbol": "PIMO",
+      "common": "singleleaf pinyon",
+      "scientific": "Pinus monophylla",
+      "form": "Trees",
+      "form_detail": "Conifer tree",
+      "plot_type": "Tree tally: 24-ft subplots and 6.8-ft microplots",
+      "file": "data/species/PIMO.tif"
+    },
+    {
+      "symbol": "ACSA3",
+      "common": "sugar maple",
+      "scientific": "Acer saccharum",
+      "form": "Trees",
+      "form_detail": "Broadleaf tree",
+      "plot_type": "Tree tally: 24-ft subplots and 6.8-ft microplots",
+      "file": "data/species/ACSA3.tif"
+    },
+    {
+      "symbol": "LIST2",
+      "common": "sweetgum",
+      "scientific": "Liquidambar styraciflua",
+      "form": "Trees",
+      "form_detail": "Broadleaf tree",
+      "plot_type": "Tree tally: 24-ft subplots and 6.8-ft microplots",
+      "file": "data/species/LIST2.tif"
     },
     {
       "symbol": "PIED",
       "common": "twoneedle pinyon",
+      "scientific": "Pinus edulis",
       "form": "Trees",
+      "form_detail": "Conifer tree",
+      "plot_type": "Tree tally: 24-ft subplots and 6.8-ft microplots",
       "file": "data/species/PIED.tif"
+    },
+    {
+      "symbol": "QUNI",
+      "common": "water oak",
+      "scientific": "Quercus nigra",
+      "form": "Trees",
+      "form_detail": "Broadleaf tree",
+      "plot_type": "Tree tally: 24-ft subplots and 6.8-ft microplots",
+      "file": "data/species/QUNI.tif"
+    },
+    {
+      "symbol": "FRAM2",
+      "common": "white ash",
+      "scientific": "Fraxinus americana",
+      "form": "Trees",
+      "form_detail": "Broadleaf tree",
+      "plot_type": "Tree tally: 24-ft subplots and 6.8-ft microplots",
+      "file": "data/species/FRAM2.tif"
     },
     {
       "symbol": "QUAL",
       "common": "white oak",
+      "scientific": "Quercus alba",
       "form": "Trees",
+      "form_detail": "Broadleaf tree",
+      "plot_type": "Tree tally: 24-ft subplots and 6.8-ft microplots",
       "file": "data/species/QUAL.tif"
     },
     {
       "symbol": "PIAL",
       "common": "whitebark pine",
+      "scientific": "Pinus albicaulis",
       "form": "Trees",
+      "form_detail": "Conifer tree",
+      "plot_type": "Tree tally: 24-ft subplots and 6.8-ft microplots",
       "file": "data/species/PIAL.tif"
+    },
+    {
+      "symbol": "RUUR",
+      "common": "California blackberry",
+      "scientific": "Rubus ursinus",
+      "form": "Shrubs",
+      "form_detail": "Subshrub",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/RUUR.tif"
+    },
+    {
+      "symbol": "MANE2",
+      "common": "Cascade barberry",
+      "scientific": "Mahonia nervosa",
+      "form": "Shrubs",
+      "form_detail": "Subshrub",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/MANE2.tif"
+    },
+    {
+      "symbol": "LOJA",
+      "common": "Japanese honeysuckle",
+      "scientific": "Lonicera japonica",
+      "form": "Shrubs",
+      "form_detail": "Woody vine",
+      "plot_type": "Invasive plant and understory surveys: 24-ft subplots",
+      "file": "data/species/LOJA.tif"
+    },
+    {
+      "symbol": "AMAL2",
+      "common": "Saskatoon serviceberry",
+      "scientific": "Amelanchier alnifolia",
+      "form": "Shrubs",
+      "form_detail": "Shrub",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/AMAL2.tif"
+    },
+    {
+      "symbol": "CEMO2",
+      "common": "alderleaf mountain mahogany",
+      "scientific": "Cercocarpus montanus",
+      "form": "Shrubs",
+      "form_detail": "Shrub",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/CEMO2.tif"
+    },
+    {
+      "symbol": "PUTR2",
+      "common": "antelope bitterbrush",
+      "scientific": "Purshia tridentata",
+      "form": "Shrubs",
+      "form_detail": "Shrub",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/PUTR2.tif"
+    },
+    {
+      "symbol": "ARTR2",
+      "common": "big sagebrush",
+      "scientific": "Artemisia tridentata",
+      "form": "Shrubs",
+      "form_detail": "Shrub",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/ARTR2.tif"
+    },
+    {
+      "symbol": "JUCO6",
+      "common": "common juniper",
+      "scientific": "Juniperus communis",
+      "form": "Shrubs",
+      "form_detail": "Shrub",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/JUCO6.tif"
+    },
+    {
+      "symbol": "SYAL",
+      "common": "common snowberry",
+      "scientific": "Symphoricarpos albus",
+      "form": "Shrubs",
+      "form_detail": "Subshrub",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/SYAL.tif"
+    },
+    {
+      "symbol": "MARE11",
+      "common": "creeping barberry",
+      "scientific": "Mahonia repens",
+      "form": "Shrubs",
+      "form_detail": "Subshrub",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/MARE11.tif"
+    },
+    {
+      "symbol": "LATR2",
+      "common": "creosote bush",
+      "scientific": "Larrea tridentata",
+      "form": "Shrubs",
+      "form_detail": "Shrub",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/LATR2.tif"
+    },
+    {
+      "symbol": "VASC",
+      "common": "grouse whortleberry",
+      "scientific": "Vaccinium scoparium",
+      "form": "Shrubs",
+      "form_detail": "Subshrub",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/VASC.tif"
+    },
+    {
+      "symbol": "VAAN",
+      "common": "lowbush blueberry",
+      "scientific": "Vaccinium angustifolium",
+      "form": "Shrubs",
+      "form_detail": "Subshrub",
+      "plot_type": "Phase 3 vegetation only: 24-ft subplots",
+      "file": "data/species/VAAN.tif"
+    },
+    {
+      "symbol": "KALA",
+      "common": "mountain laurel",
+      "scientific": "Kalmia latifolia",
+      "form": "Shrubs",
+      "form_detail": "Shrub",
+      "plot_type": "Phase 3 vegetation only: 24-ft subplots",
+      "file": "data/species/KALA.tif"
+    },
+    {
+      "symbol": "SYOR2",
+      "common": "mountain snowberry",
+      "scientific": "Symphoricarpos oreophilus",
+      "form": "Shrubs",
+      "form_detail": "Shrub",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/SYOR2.tif"
+    },
+    {
+      "symbol": "ROMU",
+      "common": "multiflora rose",
+      "scientific": "Rosa multiflora",
+      "form": "Shrubs",
+      "form_detail": "Subshrub",
+      "plot_type": "Invasive plant and understory surveys: 24-ft subplots",
+      "file": "data/species/ROMU.tif"
+    },
+    {
+      "symbol": "HODI",
+      "common": "oceanspray",
+      "scientific": "Holodiscus discolor",
+      "form": "Shrubs",
+      "form_detail": "Shrub",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/HODI.tif"
+    },
+    {
+      "symbol": "VAPA",
+      "common": "red huckleberry",
+      "scientific": "Vaccinium parvifolium",
+      "form": "Shrubs",
+      "form_detail": "Shrub",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/VAPA.tif"
+    },
+    {
+      "symbol": "GASH",
+      "common": "salal",
+      "scientific": "Gaultheria shallon",
+      "form": "Shrubs",
+      "form_detail": "Subshrub",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/GASH.tif"
+    },
+    {
+      "symbol": "CEVE",
+      "common": "snowbrush ceanothus",
+      "scientific": "Ceanothus velutinus",
+      "form": "Shrubs",
+      "form_detail": "Shrub",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/CEVE.tif"
+    },
+    {
+      "symbol": "RUPA",
+      "common": "thimbleberry",
+      "scientific": "Rubus parviflorus",
+      "form": "Shrubs",
+      "form_detail": "Subshrub",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/RUPA.tif"
+    },
+    {
+      "symbol": "VAME",
+      "common": "thinleaf huckleberry",
+      "scientific": "Vaccinium membranaceum",
+      "form": "Shrubs",
+      "form_detail": "Shrub",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/VAME.tif"
+    },
+    {
+      "symbol": "SYOC",
+      "common": "western snowberry",
+      "scientific": "Symphoricarpos occidentalis",
+      "form": "Shrubs",
+      "form_detail": "Shrub",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/SYOC.tif"
+    },
+    {
+      "symbol": "SPBE2",
+      "common": "white spirea",
+      "scientific": "Spiraea betulifolia",
+      "form": "Shrubs",
+      "form_detail": "Shrub",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/SPBE2.tif"
+    },
+    {
+      "symbol": "PAQU",
+      "common": "American ginseng",
+      "scientific": "Panax quinquefolius",
+      "form": "Herbs & Forbs",
+      "form_detail": "Herb/Forb",
+      "plot_type": "Phase 3 vegetation only: 24-ft subplots",
+      "file": "data/species/PAQU.tif"
+    },
+    {
+      "symbol": "CIAR4",
+      "common": "Canada thistle",
+      "scientific": "Cirsium arvense",
+      "form": "Herbs & Forbs",
+      "form_detail": "Herb/Forb",
+      "plot_type": "Invasive plant and understory surveys: 24-ft subplots",
+      "file": "data/species/CIAR4.tif"
+    },
+    {
+      "symbol": "LYJA",
+      "common": "Japanese climbing fern",
+      "scientific": "Lygodium japonicum",
+      "form": "Herbs & Forbs",
+      "form_detail": "Herb/Forb",
+      "plot_type": "Invasive plant survey only: 24-ft subplots",
+      "file": "data/species/LYJA.tif"
+    },
+    {
+      "symbol": "FRVI",
+      "common": "Virginia strawberry",
+      "scientific": "Fragaria virginiana",
+      "form": "Herbs & Forbs",
+      "form_detail": "Herb/Forb",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/FRVI.tif"
+    },
+    {
+      "symbol": "BASA3",
+      "common": "arrowleaf balsamroot",
+      "scientific": "Balsamorhiza sagittata",
+      "form": "Herbs & Forbs",
+      "form_detail": "Herb/Forb",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/BASA3.tif"
+    },
+    {
+      "symbol": "ACRA7",
+      "common": "black cohosh",
+      "scientific": "Actaea racemosa",
+      "form": "Herbs & Forbs",
+      "form_detail": "Herb/Forb",
+      "plot_type": "Phase 3 vegetation only: 24-ft subplots",
+      "file": "data/species/ACRA7.tif"
+    },
+    {
+      "symbol": "GUSA2",
+      "common": "broom snakeweed",
+      "scientific": "Gutierrezia sarothrae",
+      "form": "Herbs & Forbs",
+      "form_detail": "Herb/Forb",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/GUSA2.tif"
+    },
+    {
+      "symbol": "XETE",
+      "common": "common beargrass",
+      "scientific": "Xerophyllum tenax",
+      "form": "Herbs & Forbs",
+      "form_detail": "Herb/Forb",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/XETE.tif"
+    },
+    {
+      "symbol": "ATFI",
+      "common": "common ladyfern",
+      "scientific": "Athyrium filix-femina",
+      "form": "Herbs & Forbs",
+      "form_detail": "Herb/Forb",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/ATFI.tif"
+    },
+    {
+      "symbol": "ASSY",
+      "common": "common milkweed",
+      "scientific": "Asclepias syriaca",
+      "form": "Herbs & Forbs",
+      "form_detail": "Herb/Forb",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/ASSY.tif"
+    },
+    {
+      "symbol": "ACMI2",
+      "common": "common yarrow",
+      "scientific": "Achillea millefolium",
+      "form": "Herbs & Forbs",
+      "form_detail": "Herb/Forb",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/ACMI2.tif"
+    },
+    {
+      "symbol": "CHAN9",
+      "common": "fireweed",
+      "scientific": "Chamerion angustifolium",
+      "form": "Herbs & Forbs",
+      "form_detail": "Herb/Forb",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/CHAN9.tif"
+    },
+    {
+      "symbol": "ALPE4",
+      "common": "garlic mustard",
+      "scientific": "Alliaria petiolata",
+      "form": "Herbs & Forbs",
+      "form_detail": "Herb/Forb",
+      "plot_type": "Invasive plant and understory surveys: 24-ft subplots",
+      "file": "data/species/ALPE4.tif"
+    },
+    {
+      "symbol": "ARCO9",
+      "common": "heartleaf arnica",
+      "scientific": "Arnica cordifolia",
+      "form": "Herbs & Forbs",
+      "form_detail": "Herb/Forb",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/ARCO9.tif"
+    },
+    {
+      "symbol": "PUMO",
+      "common": "kudzu",
+      "scientific": "Pueraria montana",
+      "form": "Herbs & Forbs",
+      "form_detail": "Herb/Forb",
+      "plot_type": "Invasive plant and understory surveys: 24-ft subplots",
+      "file": "data/species/PUMO.tif"
+    },
+    {
+      "symbol": "EUES",
+      "common": "leafy spurge",
+      "scientific": "Euphorbia esula",
+      "form": "Herbs & Forbs",
+      "form_detail": "Herb/Forb",
+      "plot_type": "Invasive plant and understory surveys: 24-ft subplots",
+      "file": "data/species/EUES.tif"
+    },
+    {
+      "symbol": "ALTR3",
+      "common": "ramp",
+      "scientific": "Allium tricoccum",
+      "form": "Herbs & Forbs",
+      "form_detail": "Herb/Forb",
+      "plot_type": "Phase 3 vegetation only: 24-ft subplots",
+      "file": "data/species/ALTR3.tif"
+    },
+    {
+      "symbol": "LECU",
+      "common": "sericea lespedeza",
+      "scientific": "Lespedeza cuneata",
+      "form": "Herbs & Forbs",
+      "form_detail": "Herb/Forb",
+      "plot_type": "Invasive plant and understory surveys: 24-ft subplots",
+      "file": "data/species/LECU.tif"
+    },
+    {
+      "symbol": "LIBO3",
+      "common": "twinflower",
+      "scientific": "Linnaea borealis",
+      "form": "Herbs & Forbs",
+      "form_detail": "Herb/Forb",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/LIBO3.tif"
+    },
+    {
+      "symbol": "PTAQ",
+      "common": "western brackenfern",
+      "scientific": "Pteridium aquilinum",
+      "form": "Herbs & Forbs",
+      "form_detail": "Herb/Forb",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/PTAQ.tif"
+    },
+    {
+      "symbol": "THOC",
+      "common": "western meadow-rue",
+      "scientific": "Thalictrum occidentale",
+      "form": "Herbs & Forbs",
+      "form_detail": "Herb/Forb",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/THOC.tif"
+    },
+    {
+      "symbol": "POMU",
+      "common": "western swordfern",
+      "scientific": "Polystichum munitum",
+      "form": "Herbs & Forbs",
+      "form_detail": "Herb/Forb",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/POMU.tif"
+    },
+    {
+      "symbol": "ARNU2",
+      "common": "wild sarsaparilla",
+      "scientific": "Aralia nudicaulis",
+      "form": "Herbs & Forbs",
+      "form_detail": "Herb/Forb",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/ARNU2.tif"
+    },
+    {
+      "symbol": "FRVE",
+      "common": "woodland strawberry",
+      "scientific": "Fragaria vesca",
+      "form": "Herbs & Forbs",
+      "form_detail": "Herb/Forb",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/FRVE.tif"
+    },
+    {
+      "symbol": "CESO3",
+      "common": "yellow star-thistle",
+      "scientific": "Centaurea solstitialis",
+      "form": "Herbs & Forbs",
+      "form_detail": "Herb/Forb",
+      "plot_type": "Understory and invasive plant surveys: 24-ft subplots",
+      "file": "data/species/CESO3.tif"
+    },
+    {
+      "symbol": "FEAR2",
+      "common": "Arizona fescue",
+      "scientific": "Festuca arizonica",
+      "form": "Grasses",
+      "form_detail": "Grass",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/FEAR2.tif"
+    },
+    {
+      "symbol": "BRCA5",
+      "common": "California brome",
+      "scientific": "Bromus carinatus",
+      "form": "Grasses",
+      "form_detail": "Grass",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/BRCA5.tif"
+    },
+    {
+      "symbol": "BRVU",
+      "common": "Columbia brome",
+      "scientific": "Bromus vulgaris",
+      "form": "Grasses",
+      "form_detail": "Grass",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/BRVU.tif"
+    },
+    {
+      "symbol": "CAGE2",
+      "common": "Geyer's sedge",
+      "scientific": "Carex geyeri",
+      "form": "Grasses",
+      "form_detail": "Sedge",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/CAGE2.tif"
+    },
+    {
+      "symbol": "FEID",
+      "common": "Idaho fescue",
+      "scientific": "Festuca idahoensis",
+      "form": "Grasses",
+      "form_detail": "Grass",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/FEID.tif"
+    },
+    {
+      "symbol": "POPR",
+      "common": "Kentucky bluegrass",
+      "scientific": "Poa pratensis",
+      "form": "Grasses",
+      "form_detail": "Grass",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/POPR.tif"
+    },
+    {
+      "symbol": "MIVI",
+      "common": "Nepalese browntop",
+      "scientific": "Microstegium vimineum",
+      "form": "Grasses",
+      "form_detail": "Grass",
+      "plot_type": "Invasive plant and understory surveys: 24-ft subplots",
+      "file": "data/species/MIVI.tif"
+    },
+    {
+      "symbol": "CAPE6",
+      "common": "Pennsylvania sedge",
+      "scientific": "Carex pensylvanica",
+      "form": "Grasses",
+      "form_detail": "Sedge",
+      "plot_type": "Phase 3 vegetation only: 24-ft subplots",
+      "file": "data/species/CAPE6.tif"
+    },
+    {
+      "symbol": "CARO5",
+      "common": "Ross' sedge",
+      "scientific": "Carex rossii",
+      "form": "Grasses",
+      "form_detail": "Sedge",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/CARO5.tif"
+    },
+    {
+      "symbol": "POSE",
+      "common": "Sandberg bluegrass",
+      "scientific": "Poa secunda",
+      "form": "Grasses",
+      "form_detail": "Grass",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/POSE.tif"
+    },
+    {
+      "symbol": "ANGE",
+      "common": "big bluestem",
+      "scientific": "Andropogon gerardii",
+      "form": "Grasses",
+      "form_detail": "Grass",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/ANGE.tif"
+    },
+    {
+      "symbol": "BOER4",
+      "common": "black grama",
+      "scientific": "Bouteloua eriopoda",
+      "form": "Grasses",
+      "form_detail": "Grass",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/BOER4.tif"
+    },
+    {
+      "symbol": "BOGR2",
+      "common": "blue grama",
+      "scientific": "Bouteloua gracilis",
+      "form": "Grasses",
+      "form_detail": "Grass",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/BOGR2.tif"
+    },
+    {
+      "symbol": "ELGL",
+      "common": "blue wildrye",
+      "scientific": "Elymus glaucus",
+      "form": "Grasses",
+      "form_detail": "Grass",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/ELGL.tif"
+    },
+    {
+      "symbol": "PSSP6",
+      "common": "bluebunch wheatgrass",
+      "scientific": "Pseudoroegneria spicata",
+      "form": "Grasses",
+      "form_detail": "Grass",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/PSSP6.tif"
+    },
+    {
+      "symbol": "BRTE",
+      "common": "cheatgrass",
+      "scientific": "Bromus tectorum",
+      "form": "Grasses",
+      "form_detail": "Grass",
+      "plot_type": "Understory and invasive plant surveys: 24-ft subplots",
+      "file": "data/species/BRTE.tif"
+    },
+    {
+      "symbol": "TACA8",
+      "common": "medusahead",
+      "scientific": "Taeniatherum caput-medusae",
+      "form": "Grasses",
+      "form_detail": "Grass",
+      "plot_type": "Understory and invasive plant surveys: 24-ft subplots",
+      "file": "data/species/TACA8.tif"
+    },
+    {
+      "symbol": "MUMO",
+      "common": "mountain muhly",
+      "scientific": "Muhlenbergia montana",
+      "form": "Grasses",
+      "form_detail": "Grass",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/MUMO.tif"
+    },
+    {
+      "symbol": "CARU",
+      "common": "pinegrass",
+      "scientific": "Calamagrostis rubescens",
+      "form": "Grasses",
+      "form_detail": "Grass",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/CARU.tif"
+    },
+    {
+      "symbol": "PHAR3",
+      "common": "reed canarygrass",
+      "scientific": "Phalaris arundinacea",
+      "form": "Grasses",
+      "form_detail": "Grass",
+      "plot_type": "Invasive plant and understory surveys: 24-ft subplots",
+      "file": "data/species/PHAR3.tif"
+    },
+    {
+      "symbol": "BOCU",
+      "common": "sideoats grama",
+      "scientific": "Bouteloua curtipendula",
+      "form": "Grasses",
+      "form_detail": "Grass",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/BOCU.tif"
+    },
+    {
+      "symbol": "BRIN2",
+      "common": "smooth brome",
+      "scientific": "Bromus inermis",
+      "form": "Grasses",
+      "form_detail": "Grass",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/BRIN2.tif"
+    },
+    {
+      "symbol": "ELEL5",
+      "common": "squirreltail",
+      "scientific": "Elymus elymoides",
+      "form": "Grasses",
+      "form_detail": "Grass",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/ELEL5.tif"
+    },
+    {
+      "symbol": "SCAR7",
+      "common": "tall fescue",
+      "scientific": "Schedonorus arundinaceus",
+      "form": "Grasses",
+      "form_detail": "Grass",
+      "plot_type": "Invasive plant and understory surveys: 24-ft subplots",
+      "file": "data/species/SCAR7.tif"
+    },
+    {
+      "symbol": "FEOC",
+      "common": "western fescue",
+      "scientific": "Festuca occidentalis",
+      "form": "Grasses",
+      "form_detail": "Grass",
+      "plot_type": "Understory vegetation: 24-ft subplots",
+      "file": "data/species/FEOC.tif"
     }
   ]
 }

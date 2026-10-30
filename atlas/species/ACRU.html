@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Red maple - Species Range Atlas</title><style>
+  body { font-family: 'Segoe UI', Helvetica, Arial, sans-serif; margin: 0; background: #faf8f5; color: #2b2b2b; }
+  header { padding: 18px 24px 8px 24px; }
+  h1 { font-size: 1.5rem; margin: 0 0 4px 0; }
+  p.note { margin: 4px 0; color: #555; font-size: 0.92rem; max-width: 60rem; }
+  details.about { max-width: 60rem; margin: 6px 0 2px 0; font-size: 0.88rem; color: #444; }
+  details.about summary { cursor: pointer; font-weight: 600; color: #7a2e0b; }
+  details.about p { margin: 6px 0; line-height: 1.4; }
+  main { padding: 8px 24px 24px 24px; }
+  input#search { width: 22rem; max-width: 100%; padding: 7px 10px; font-size: 1rem; border: 1px solid #bbb; border-radius: 4px; margin: 8px 0 10px 0; }
+  .form-filters { display: flex; align-items: center; gap: 14px; margin: 0 0 14px 0; font-size: 0.88rem; flex-wrap: wrap; background: #faf6f0; padding: 7px 12px; border-radius: 6px; border: 1px solid #e8e2d8; width: fit-content; }
+  .form-filters label { display: inline-flex; align-items: center; gap: 4px; cursor: pointer; user-select: none; font-weight: 500; color: #333; }
+  .form-filters label:hover { color: #7a2e0b; }
+  .sidebar-form-filters { display: flex; flex-wrap: wrap; gap: 4px 8px; margin: 6px 0 4px 0; font-size: 0.76rem; background: #fff; padding: 4px 6px; border-radius: 4px; border: 1px solid #e8e2d8; }
+  .sidebar-form-filters label { display: inline-flex; align-items: center; gap: 3px; cursor: pointer; user-select: none; font-weight: 500; color: #444; }
+  .sidebar-form-filters label:hover { color: #7a2e0b; }
+  table#species { border-collapse: collapse; background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+  table#species th, table#species td { padding: 7px 12px; border-bottom: 1px solid #eee; text-align: left; vertical-align: middle; }
+  table#species th { background: #7a2e0b; color: white; cursor: pointer; user-select: none; white-space: nowrap; font-size: 0.88rem; }
+  table#species th .arrow { opacity: 0.7; font-size: 0.8em; margin-left: 4px; }
+  td.num { text-align: right; white-space: nowrap; }
+  table#species tr:hover td { background: #fdf1dc; }
+  td a { color: #2b2b2b; text-decoration: none; display: block; }
+  td a:hover { text-decoration: underline; }
+  td.sci a { font-style: italic; font-weight: 500; }
+  .thumb { width: 42px; height: 42px; object-fit: cover; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.2); vertical-align: middle; display: block; background: #e8e4dc; }
+  .badge { display: inline-flex; align-items: center; gap: 5px; padding: 2px 7px; border-radius: 10px; font-size: 0.74rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; vertical-align: middle; white-space: nowrap; }
+  .form-icon { width: 18px; height: 18px; object-fit: contain; }
+  .plot-type-tag { font-size: 0.76rem; color: #444; background: #ede9e1; padding: 3px 7px; border-radius: 4px; font-weight: 500; display: inline-block; max-width: 16rem; line-height: 1.3; }
+  .usda-btn { display: inline-block; padding: 3px 8px; border-radius: 4px; background: #2e7d32; color: #fff !important; font-size: 0.75rem; font-weight: 600; text-decoration: none !important; white-space: nowrap; }
+  .usda-btn:hover { background: #1b5e20; }
+  .photo-credit { font-size: 0.68rem; color: #777; line-height: 1.25; margin: 3px 0 0 0; }
+  .photo-credit a { color: #666; text-decoration: underline; text-decoration-color: #bbb; }
+  .photo-credit a:hover { color: #222; }
+  nav.pager { display: flex; gap: 14px; align-items: center; padding: 8px 16px; background: white; border-bottom: 1px solid #ddd; flex-wrap: wrap; z-index: 10; position: relative; }
+  nav.pager a { color: #7a2e0b; text-decoration: none; font-weight: 500; }
+  nav.pager a:hover { text-decoration: underline; }
+  button { padding: 5px 11px; font-size: 0.9rem; cursor: pointer; border-radius: 4px; border: 1px solid #ccc; background: #fff; }
+  button:hover { background: #f0efec; }
+  button.active-btn { background: #7a2e0b; color: white; border-color: #7a2e0b; }
+  .page-container { display: flex; height: calc(100vh - 49px); overflow: hidden; position: relative; }
+  #sidebar { width: 340px; min-width: 280px; max-width: 420px; background: white; border-right: 1px solid #ddd; display: flex; flex-direction: column; transition: margin-left 0.2s ease; z-index: 5; }
+  #sidebar.collapsed { margin-left: -340px; }
+  .sidebar-header { padding: 8px 12px; border-bottom: 1px solid #eee; background: #faf8f5; }
+  .sidebar-header input { width: 100%; box-sizing: border-box; padding: 6px 9px; font-size: 0.88rem; border: 1px solid #ccc; border-radius: 4px; }
+  .sidebar-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.78rem; color: #666; margin-top: 5px; }
+  .sidebar-table-wrap { flex: 1; overflow-y: auto; }
+  .sidebar-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .sidebar-table th { background: #7a2e0b; color: white; padding: 6px 10px; font-size: 0.8rem; position: sticky; top: 0; z-index: 2; text-align: left; }
+  .sidebar-table td { padding: 6px 10px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
+  .sidebar-table tr.active td { background: #fdf1dc; font-weight: 600; border-left: 3px solid #7a2e0b; }
+  .sidebar-table tr:hover:not(.active) td { background: #fbf7ee; }
+  .sidebar-table td.sci a { font-style: italic; }
+  .sidebar-table td a { color: #2b2b2b; text-decoration: none; display: block; }
+  .sidebar-table td a:hover { color: #7a2e0b; text-decoration: underline; }
+  #viewer { flex: 1; position: relative; overflow: hidden; background: white; cursor: grab; touch-action: none; height: 100%; }
+  #viewer img#map { position: absolute; left: 0; top: 0; transform-origin: 0 0; user-select: none; -webkit-user-drag: none; }
+
+  /* Floating Hover Card Popup in Table of Contents */
+  table#species tbody tr { cursor: pointer; }
+  table#species tbody tr.row-active td { background: #fdf1dc; }
+  #species-popup {
+    position: fixed;
+    display: none;
+    z-index: 9999;
+    width: 350px;
+    max-height: calc(100vh - 20px);
+    overflow-y: auto;
+    background: #ffffff;
+    border: 1px solid #d5cfc5;
+    border-radius: 8px;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.22);
+    pointer-events: auto;
+    font-size: 0.82rem;
+    line-height: 1.35;
+  }
+  .pop-footer a.pop-open { color: #7a2e0b; }
+  .pop-footer a:hover { text-decoration: underline; }
+  #species-popup.active { display: block; }
+  .pop-banner { position: relative; height: 130px; background: #e8e4dc; overflow: hidden; }
+  .pop-banner img.photo { width: 100%; height: 100%; object-fit: cover; }
+  .pop-badge { position: absolute; bottom: 8px; right: 8px; background: rgba(255,255,255,0.95); padding: 3px 8px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.25); display: flex; align-items: center; gap: 5px; font-size: 0.74rem; font-weight: 600; }
+  .pop-badge img { width: 18px; height: 18px; object-fit: contain; }
+  .pop-credit { padding: 3px 14px 0 14px; }
+  .pop-content { padding: 6px 14px 10px 14px; }
+  .pop-title { font-size: 1.05rem; font-weight: 700; color: #222; margin: 0 0 2px 0; }
+  .pop-sci { font-style: italic; color: #666; font-size: 0.88rem; margin-bottom: 6px; }
+  .pop-stats-table { width: 100%; border-collapse: collapse; font-size: 0.76rem; margin-bottom: 6px; }
+  .pop-stats-table tr:nth-child(even) td, .pop-stats-table tr:nth-child(even) th { background: #fbf9f5; }
+  .pop-stats-table th { font-weight: 600; color: #666; text-align: left; padding: 2.5px 6px; width: 32%; white-space: nowrap; border-bottom: 1px solid #f0eee8; }
+  .pop-stats-table td { color: #222; padding: 2.5px 6px; border-bottom: 1px solid #f0eee8; }
+  .pop-extract { font-size: 0.74rem; color: #555; line-height: 1.25; max-height: 40px; overflow: hidden; margin-top: 4px; }
+  .pop-footer { padding: 6px 14px 8px 14px; border-top: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; font-size: 0.78rem; background: #faf8f5; }
+  .pop-footer a { color: #2e7d32; font-weight: 600; text-decoration: none; }
+
+  /* Floating Info Card on Species Pages */
+  .species-info-card {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(6px);
+    border: 1px solid #d5cfc5;
+    border-radius: 8px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+    padding: 12px 14px;
+    z-index: 10;
+    width: 360px;
+    max-width: calc(100vw - 380px);
+    max-height: calc(100% - 40px);
+    overflow-y: auto;
+    box-sizing: border-box;
+    pointer-events: auto;
+    font-size: 0.82rem;
+    cursor: auto;
+  }
+  .card-header { display: flex; gap: 10px; align-items: center; margin-bottom: 4px; }
+  .card-credit { border-bottom: 2px solid var(--accent, #7a2e0b); padding-bottom: 6px; margin-bottom: 8px; }
+  .card-photo { width: 68px; height: 68px; border-radius: 6px; object-fit: cover; box-shadow: 0 1px 4px rgba(0,0,0,0.25); flex-shrink: 0; background: #e8e4dc; }
+  .card-header-meta { flex: 1; min-width: 0; }
+  .card-title { font-weight: 700; font-size: 0.96rem; color: #222; margin-bottom: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .card-sci { font-size: 0.82rem; color: #666; font-style: italic; margin-bottom: 4px; }
+  .card-badges { display: flex; gap: 5px; align-items: center; flex-wrap: wrap; }
+  .card-stats-table { width: 100%; border-collapse: collapse; font-size: 0.77rem; margin-bottom: 8px; }
+  .card-stats-table tr:nth-child(even) td, .card-stats-table tr:nth-child(even) th { background: #fbf9f5; }
+  .card-stats-table th { font-weight: 600; color: #666; text-align: left; padding: 3px 6px; width: 33%; white-space: nowrap; border-bottom: 1px solid #f0eee8; }
+  .card-stats-table td { color: #222; padding: 3px 6px; border-bottom: 1px solid #f0eee8; }
+  .card-actions { display: flex; justify-content: flex-end; align-items: center; }
+
+  /* Yearly graph panel on species pages (top right of the map viewer) */
+  .annual-card {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 440px;
+    max-width: calc(100% - 28px);
+    max-height: calc(100% - 28px);
+    overflow-y: auto;
+    background: rgba(255, 255, 255, 0.97);
+    border: 1px solid #d5cfc5;
+    border-radius: 8px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+    padding: 8px 12px 10px 12px;
+    z-index: 10;
+    cursor: auto;
+    font-size: 0.8rem;
+    box-sizing: border-box;
+  }
+  .annual-card summary { font-weight: 700; font-size: 0.86rem; color: #222; cursor: pointer; padding: 2px 0; }
+  .annual-card img.annual { width: 100%; height: auto; display: block; margin: 6px 0 4px 0; }
+  .annual-card p.annual-caption { margin: 2px 0 6px 0; color: #555; font-size: 0.76rem; line-height: 1.3; }
+  .annual-card details.annual-table summary { font-weight: 600; font-size: 0.78rem; color: var(--accent-text, #7a2e0b); }
+  .annual-card table { width: 100%; border-collapse: collapse; font-size: 0.72rem; margin-top: 4px; }
+  .annual-card th, .annual-card td { padding: 2px 5px; border-bottom: 1px solid #f0eee8; text-align: right; white-space: nowrap; }
+  .annual-card th { color: #666; font-weight: 600; background: #faf8f5; white-space: normal; }
+  .annual-card td.flag { text-align: left; color: #777; }
+
+  .badge-tree { background: #e3873a26; color: #7a2e0b; }
+  .badge-shrub { background: #8e24aa26; color: #8e24aa; }
+  .badge-herb { background: #00838f26; color: #00838f; }
+  .badge-grass { background: #fbc02d26; color: #e65100; }
+</style></head><body style="--accent: #e3873a; --accent-text: #7a2e0b;"><nav class="pager"><button id="toggle-sidebar" title="Toggle species list sidebar">&#9776; Species List</button><a href="../index.html">&larr; Back to full table</a><a href="POTR5.html">&lsaquo; Previous</a><a href="PIMO.html">Next &rsaquo;</a><strong>Red maple (<i>Acer rubrum</i>) <span class="badge badge-tree"><img class="form-icon" src="../icons/small/hardwood_tree.png" alt=""> Broadleaf tree</span></strong><span><button id="zin" title="Zoom in">+</button> <button id="zout" title="Zoom out">&minus;</button> <button id="reset">Reset view</button></span><span class="note">Scroll or pinch to zoom, drag to pan</span><a href="../../#sp=ACRU" target="_blank" style="margin-left:auto; display:inline-flex; align-items:center; gap:5px; padding:4px 10px; background:#2e7d32; color:#ffffff; text-decoration:none; border-radius:4px; font-weight:600; font-size:0.82rem; white-space:nowrap;" title="Open this species in the interactive COG Leaflet map">&#127758; Interactive Map &rarr;</a></nav><div class="page-container"><aside id="sidebar"><div class="sidebar-header"><input id="pane-search" type="search" placeholder="Search species or type..." aria-label="Search species"><div class="sidebar-form-filters"><label><input type="checkbox" class="pane-form-cb" value="badge-tree" checked> Trees (25)</label><label><input type="checkbox" class="pane-form-cb" value="badge-shrub" checked> Shrubs (24)</label><label><input type="checkbox" class="pane-form-cb" value="badge-herb" checked> Herbs &amp; Forbs (25)</label><label><input type="checkbox" class="pane-form-cb" value="badge-grass" checked> Grasses (25)</label></div><div class="sidebar-meta"><span id="pane-count">99 of 99 species</span><span>Click species to switch</span></div></div><div class="sidebar-table-wrap"><table id="pane-list" class="sidebar-table"><thead><tr><th>Scientific name</th><th>Common name &amp; type</th></tr></thead><tbody><tr data-form="badge-tree"><td class="sci"><a href="ULAM.html">Ulmus americana</a></td><td class="c1"><a href="ULAM.html">American elm <span class="badge badge-tree"><img class="form-icon" src="../icons/small/hardwood_tree.png" alt=""> Broadleaf tree</span></a></td></tr>
+<tr data-form="badge-tree"><td class="sci"><a href="PRSE2.html">Prunus serotina</a></td><td class="c1"><a href="PRSE2.html">Black cherry <span class="badge badge-tree"><img class="form-icon" src="../icons/small/hardwood_tree.png" alt=""> Broadleaf tree</span></a></td></tr>
+<tr data-form="badge-tree"><td class="sci"><a href="QUVE.html">Quercus velutina</a></td><td class="c1"><a href="QUVE.html">Black oak <span class="badge badge-tree"><img class="form-icon" src="../icons/small/hardwood_tree.png" alt=""> Broadleaf tree</span></a></td></tr>
+<tr data-form="badge-tree"><td class="sci"><a href="NYSY.html">Nyssa sylvatica</a></td><td class="c1"><a href="NYSY.html">Blackgum <span class="badge badge-tree"><img class="form-icon" src="../icons/small/hardwood_tree.png" alt=""> Broadleaf tree</span></a></td></tr>
+<tr data-form="badge-tree"><td class="sci"><a href="QUMA2.html">Quercus macrocarpa</a></td><td class="c1"><a href="QUMA2.html">Bur oak <span class="badge badge-tree"><img class="form-icon" src="../icons/small/hardwood_tree.png" alt=""> Broadleaf tree</span></a></td></tr>
+<tr data-form="badge-tree"><td class="sci"><a href="PSME.html">Pseudotsuga menziesii</a></td><td class="c1"><a href="PSME.html">Douglas-fir <span class="badge badge-tree"><img class="form-icon" src="../icons/small/conifer_tree.png" alt=""> Conifer tree</span></a></td></tr>
+<tr data-form="badge-tree"><td class="sci"><a href="JUVI.html">Juniperus virginiana</a></td><td class="c1"><a href="JUVI.html">Eastern redcedar <span class="badge badge-tree"><img class="form-icon" src="../icons/small/conifer_tree.png" alt=""> Conifer tree</span></a></td></tr>
+<tr data-form="badge-tree"><td class="sci"><a href="FRPE.html">Fraxinus pennsylvanica</a></td><td class="c1"><a href="FRPE.html">Green ash <span class="badge badge-tree"><img class="form-icon" src="../icons/small/hardwood_tree.png" alt=""> Broadleaf tree</span></a></td></tr>
+<tr data-form="badge-tree"><td class="sci"><a href="OSVI.html">Ostrya virginiana</a></td><td class="c1"><a href="OSVI.html">Hophornbeam <span class="badge badge-tree"><img class="form-icon" src="../icons/small/hardwood_tree.png" alt=""> Broadleaf tree</span></a></td></tr>
+<tr data-form="badge-tree"><td class="sci"><a href="PITA.html">Pinus taeda</a></td><td class="c1"><a href="PITA.html">Loblolly pine <span class="badge badge-tree"><img class="form-icon" src="../icons/small/conifer_tree.png" alt=""> Conifer tree</span></a></td></tr>
+<tr data-form="badge-tree"><td class="sci"><a href="ABPR.html">Abies procera</a></td><td class="c1"><a href="ABPR.html">Noble fir <span class="badge badge-tree"><img class="form-icon" src="../icons/small/conifer_tree.png" alt=""> Conifer tree</span></a></td></tr>
+<tr data-form="badge-tree"><td class="sci"><a href="QURU.html">Quercus rubra</a></td><td class="c1"><a href="QURU.html">Northern red oak <span class="badge badge-tree"><img class="form-icon" src="../icons/small/hardwood_tree.png" alt=""> Broadleaf tree</span></a></td></tr>
+<tr data-form="badge-tree"><td class="sci"><a href="JUMO.html">Juniperus monosperma</a></td><td class="c1"><a href="JUMO.html">Oneseed juniper <span class="badge badge-tree"><img class="form-icon" src="../icons/small/conifer_tree.png" alt=""> Conifer tree</span></a></td></tr>
+<tr data-form="badge-tree"><td class="sci"><a href="PIPO.html">Pinus ponderosa</a></td><td class="c1"><a href="PIPO.html">Ponderosa pine <span class="badge badge-tree"><img class="form-icon" src="../icons/small/conifer_tree.png" alt=""> Conifer tree</span></a></td></tr>
+<tr data-form="badge-tree"><td class="sci"><a href="POTR5.html">Populus tremuloides</a></td><td class="c1"><a href="POTR5.html">Quaking aspen <span class="badge badge-tree"><img class="form-icon" src="../icons/small/hardwood_tree.png" alt=""> Broadleaf tree</span></a></td></tr>
+<tr class="active" data-form="badge-tree"><td class="sci"><a href="ACRU.html">Acer rubrum</a></td><td class="c1"><a href="ACRU.html">Red maple <span class="badge badge-tree"><img class="form-icon" src="../icons/small/hardwood_tree.png" alt=""> Broadleaf tree</span></a></td></tr>
+<tr data-form="badge-tree"><td class="sci"><a href="PIMO.html">Pinus monophylla</a></td><td class="c1"><a href="PIMO.html">Singleleaf pinyon <span class="badge badge-tree"><img class="form-icon" src="../icons/small/conifer_tree.png" alt=""> Conifer tree</span></a></td></tr>
+<tr data-form="badge-tree"><td class="sci"><a href="ACSA3.html">Acer saccharum</a></td><td class="c1"><a href="ACSA3.html">Sugar maple <span class="badge badge-tree"><img class="form-icon" src="../icons/small/hardwood_tree.png" alt=""> Broadleaf tree</span></a></td></tr>
+<tr data-form="badge-tree"><td class="sci"><a href="LIST2.html">Liquidambar styraciflua</a></td><td class="c1"><a href="LIST2.html">Sweetgum <span class="badge badge-tree"><img class="form-icon" src="../icons/small/hardwood_tree.png" alt=""> Broadleaf tree</span></a></td></tr>
+<tr data-form="badge-tree"><td class="sci"><a href="PIED.html">Pinus edulis</a></td><td class="c1"><a href="PIED.html">Twoneedle pinyon <span class="badge badge-tree"><img class="form-icon" src="../icons/small/conifer_tree.png" alt=""> Conifer tree</span></a></td></tr>
+<tr data-form="badge-tree"><td class="sci"><a href="JUOS.html">Juniperus osteosperma</a></td><td class="c1"><a href="JUOS.html">Utah juniper <span class="badge badge-tree"><img class="form-icon" src="../icons/small/conifer_tree.png" alt=""> Conifer tree</span></a></td></tr>
+<tr data-form="badge-tree"><td class="sci"><a href="QUNI.html">Quercus nigra</a></td><td class="c1"><a href="QUNI.html">Water oak <span class="badge badge-tree"><img class="form-icon" src="../icons/small/hardwood_tree.png" alt=""> Broadleaf tree</span></a></td></tr>
+<tr data-form="badge-tree"><td class="sci"><a href="FRAM2.html">Fraxinus americana</a></td><td class="c1"><a href="FRAM2.html">White ash <span class="badge badge-tree"><img class="form-icon" src="../icons/small/hardwood_tree.png" alt=""> Broadleaf tree</span></a></td></tr>
+<tr data-form="badge-tree"><td class="sci"><a href="QUAL.html">Quercus alba</a></td><td class="c1"><a href="QUAL.html">White oak <span class="badge badge-tree"><img class="form-icon" src="../icons/small/hardwood_tree.png" alt=""> Broadleaf tree</span></a></td></tr>
+<tr data-form="badge-tree"><td class="sci"><a href="PIAL.html">Pinus albicaulis</a></td><td class="c1"><a href="PIAL.html">Whitebark pine <span class="badge badge-tree"><img class="form-icon" src="../icons/small/conifer_tree.png" alt=""> Conifer tree</span></a></td></tr>
+<tr data-form="badge-shrub"><td class="sci"><a href="CEMO2.html">Cercocarpus montanus</a></td><td class="c1"><a href="CEMO2.html">Alderleaf mountain mahogany <span class="badge badge-shrub"><img class="form-icon" src="../icons/small/shrub.png" alt=""> Shrub</span></a></td></tr>
+<tr data-form="badge-shrub"><td class="sci"><a href="PUTR2.html">Purshia tridentata</a></td><td class="c1"><a href="PUTR2.html">Antelope bitterbrush <span class="badge badge-shrub"><img class="form-icon" src="../icons/small/shrub.png" alt=""> Shrub</span></a></td></tr>
+<tr data-form="badge-shrub"><td class="sci"><a href="ARTR2.html">Artemisia tridentata</a></td><td class="c1"><a href="ARTR2.html">Big sagebrush <span class="badge badge-shrub"><img class="form-icon" src="../icons/small/shrub.png" alt=""> Shrub</span></a></td></tr>
+<tr data-form="badge-shrub"><td class="sci"><a href="RUUR.html">Rubus ursinus</a></td><td class="c1"><a href="RUUR.html">California blackberry <span class="badge badge-shrub"><img class="form-icon" src="../icons/small/shrub.png" alt=""> Subshrub</span></a></td></tr>
+<tr data-form="badge-shrub"><td class="sci"><a href="MANE2.html">Mahonia nervosa</a></td><td class="c1"><a href="MANE2.html">Cascade barberry <span class="badge badge-shrub"><img class="form-icon" src="../icons/small/shrub.png" alt=""> Subshrub</span></a></td></tr>
+<tr data-form="badge-shrub"><td class="sci"><a href="JUCO6.html">Juniperus communis</a></td><td class="c1"><a href="JUCO6.html">Common juniper <span class="badge badge-shrub"><img class="form-icon" src="../icons/small/shrub.png" alt=""> Shrub</span></a></td></tr>
+<tr data-form="badge-shrub"><td class="sci"><a href="SYAL.html">Symphoricarpos albus</a></td><td class="c1"><a href="SYAL.html">Common snowberry <span class="badge badge-shrub"><img class="form-icon" src="../icons/small/shrub.png" alt=""> Subshrub</span></a></td></tr>
+<tr data-form="badge-shrub"><td class="sci"><a href="MARE11.html">Mahonia repens</a></td><td class="c1"><a href="MARE11.html">Creeping barberry <span class="badge badge-shrub"><img class="form-icon" src="../icons/small/shrub.png" alt=""> Subshrub</span></a></td></tr>
+<tr data-form="badge-shrub"><td class="sci"><a href="LATR2.html">Larrea tridentata</a></td><td class="c1"><a href="LATR2.html">Creosote bush <span class="badge badge-shrub"><img class="form-icon" src="../icons/small/shrub.png" alt=""> Shrub</span></a></td></tr>
+<tr data-form="badge-shrub"><td class="sci"><a href="VASC.html">Vaccinium scoparium</a></td><td class="c1"><a href="VASC.html">Grouse whortleberry <span class="badge badge-shrub"><img class="form-icon" src="../icons/small/shrub.png" alt=""> Subshrub</span></a></td></tr>
+<tr data-form="badge-shrub"><td class="sci"><a href="LOJA.html">Lonicera japonica</a></td><td class="c1"><a href="LOJA.html">Japanese honeysuckle <span class="badge badge-shrub"><img class="form-icon" src="../icons/small/shrub.png" alt=""> Woody vine</span></a></td></tr>
+<tr data-form="badge-shrub"><td class="sci"><a href="VAAN.html">Vaccinium angustifolium</a></td><td class="c1"><a href="VAAN.html">Lowbush blueberry <span class="badge badge-shrub"><img class="form-icon" src="../icons/small/shrub.png" alt=""> Subshrub</span></a></td></tr>
+<tr data-form="badge-shrub"><td class="sci"><a href="KALA.html">Kalmia latifolia</a></td><td class="c1"><a href="KALA.html">Mountain laurel <span class="badge badge-shrub"><img class="form-icon" src="../icons/small/shrub.png" alt=""> Shrub</span></a></td></tr>
+<tr data-form="badge-shrub"><td class="sci"><a href="SYOR2.html">Symphoricarpos oreophilus</a></td><td class="c1"><a href="SYOR2.html">Mountain snowberry <span class="badge badge-shrub"><img class="form-icon" src="../icons/small/shrub.png" alt=""> Shrub</span></a></td></tr>
+<tr data-form="badge-shrub"><td class="sci"><a href="ROMU.html">Rosa multiflora</a></td><td class="c1"><a href="ROMU.html">Multiflora rose <span class="badge badge-shrub"><img class="form-icon" src="../icons/small/shrub.png" alt=""> Subshrub</span></a></td></tr>
+<tr data-form="badge-shrub"><td class="sci"><a href="HODI.html">Holodiscus discolor</a></td><td class="c1"><a href="HODI.html">Oceanspray <span class="badge badge-shrub"><img class="form-icon" src="../icons/small/shrub.png" alt=""> Shrub</span></a></td></tr>
+<tr data-form="badge-shrub"><td class="sci"><a href="VAPA.html">Vaccinium parvifolium</a></td><td class="c1"><a href="VAPA.html">Red huckleberry <span class="badge badge-shrub"><img class="form-icon" src="../icons/small/shrub.png" alt=""> Shrub</span></a></td></tr>
+<tr data-form="badge-shrub"><td class="sci"><a href="GASH.html">Gaultheria shallon</a></td><td class="c1"><a href="GASH.html">Salal <span class="badge badge-shrub"><img class="form-icon" src="../icons/small/shrub.png" alt=""> Subshrub</span></a></td></tr>
+<tr data-form="badge-shrub"><td class="sci"><a href="AMAL2.html">Amelanchier alnifolia</a></td><td class="c1"><a href="AMAL2.html">Saskatoon serviceberry <span class="badge badge-shrub"><img class="form-icon" src="../icons/small/shrub.png" alt=""> Shrub</span></a></td></tr>
+<tr data-form="badge-shrub"><td class="sci"><a href="CEVE.html">Ceanothus velutinus</a></td><td class="c1"><a href="CEVE.html">Snowbrush ceanothus <span class="badge badge-shrub"><img class="form-icon" src="../icons/small/shrub.png" alt=""> Shrub</span></a></td></tr>
+<tr data-form="badge-shrub"><td class="sci"><a href="RUPA.html">Rubus parviflorus</a></td><td class="c1"><a href="RUPA.html">Thimbleberry <span class="badge badge-shrub"><img class="form-icon" src="../icons/small/shrub.png" alt=""> Subshrub</span></a></td></tr>
+<tr data-form="badge-shrub"><td class="sci"><a href="VAME.html">Vaccinium membranaceum</a></td><td class="c1"><a href="VAME.html">Thinleaf huckleberry <span class="badge badge-shrub"><img class="form-icon" src="../icons/small/shrub.png" alt=""> Shrub</span></a></td></tr>
+<tr data-form="badge-shrub"><td class="sci"><a href="SYOC.html">Symphoricarpos occidentalis</a></td><td class="c1"><a href="SYOC.html">Western snowberry <span class="badge badge-shrub"><img class="form-icon" src="../icons/small/shrub.png" alt=""> Shrub</span></a></td></tr>
+<tr data-form="badge-shrub"><td class="sci"><a href="SPBE2.html">Spiraea betulifolia</a></td><td class="c1"><a href="SPBE2.html">White spirea <span class="badge badge-shrub"><img class="form-icon" src="../icons/small/shrub.png" alt=""> Shrub</span></a></td></tr>
+<tr data-form="badge-herb"><td class="sci"><a href="PAQU.html">Panax quinquefolius</a></td><td class="c1"><a href="PAQU.html">American ginseng <span class="badge badge-herb"><img class="form-icon" src="../icons/small/herbs_forbs.png" alt=""> Herb/Forb</span></a></td></tr>
+<tr data-form="badge-herb"><td class="sci"><a href="BASA3.html">Balsamorhiza sagittata</a></td><td class="c1"><a href="BASA3.html">Arrowleaf balsamroot <span class="badge badge-herb"><img class="form-icon" src="../icons/small/herbs_forbs.png" alt=""> Herb/Forb</span></a></td></tr>
+<tr data-form="badge-herb"><td class="sci"><a href="ACRA7.html">Actaea racemosa</a></td><td class="c1"><a href="ACRA7.html">Black cohosh <span class="badge badge-herb"><img class="form-icon" src="../icons/small/herbs_forbs.png" alt=""> Herb/Forb</span></a></td></tr>
+<tr data-form="badge-herb"><td class="sci"><a href="GUSA2.html">Gutierrezia sarothrae</a></td><td class="c1"><a href="GUSA2.html">Broom snakeweed <span class="badge badge-herb"><img class="form-icon" src="../icons/small/herbs_forbs.png" alt=""> Herb/Forb</span></a></td></tr>
+<tr data-form="badge-herb"><td class="sci"><a href="CIAR4.html">Cirsium arvense</a></td><td class="c1"><a href="CIAR4.html">Canada thistle <span class="badge badge-herb"><img class="form-icon" src="../icons/small/herbs_forbs.png" alt=""> Herb/Forb</span></a></td></tr>
+<tr data-form="badge-herb"><td class="sci"><a href="XETE.html">Xerophyllum tenax</a></td><td class="c1"><a href="XETE.html">Common beargrass <span class="badge badge-herb"><img class="form-icon" src="../icons/small/herbs_forbs.png" alt=""> Herb/Forb</span></a></td></tr>
+<tr data-form="badge-herb"><td class="sci"><a href="ATFI.html">Athyrium filix-femina</a></td><td class="c1"><a href="ATFI.html">Common ladyfern <span class="badge badge-herb"><img class="form-icon" src="../icons/small/herbs_forbs.png" alt=""> Herb/Forb</span></a></td></tr>
+<tr data-form="badge-herb"><td class="sci"><a href="ASSY.html">Asclepias syriaca</a></td><td class="c1"><a href="ASSY.html">Common milkweed <span class="badge badge-herb"><img class="form-icon" src="../icons/small/herbs_forbs.png" alt=""> Herb/Forb</span></a></td></tr>
+<tr data-form="badge-herb"><td class="sci"><a href="ACMI2.html">Achillea millefolium</a></td><td class="c1"><a href="ACMI2.html">Common yarrow <span class="badge badge-herb"><img class="form-icon" src="../icons/small/herbs_forbs.png" alt=""> Herb/Forb</span></a></td></tr>
+<tr data-form="badge-herb"><td class="sci"><a href="CHAN9.html">Chamerion angustifolium</a></td><td class="c1"><a href="CHAN9.html">Fireweed <span class="badge badge-herb"><img class="form-icon" src="../icons/small/herbs_forbs.png" alt=""> Herb/Forb</span></a></td></tr>
+<tr data-form="badge-herb"><td class="sci"><a href="ALPE4.html">Alliaria petiolata</a></td><td class="c1"><a href="ALPE4.html">Garlic mustard <span class="badge badge-herb"><img class="form-icon" src="../icons/small/herbs_forbs.png" alt=""> Herb/Forb</span></a></td></tr>
+<tr data-form="badge-herb"><td class="sci"><a href="ARCO9.html">Arnica cordifolia</a></td><td class="c1"><a href="ARCO9.html">Heartleaf arnica <span class="badge badge-herb"><img class="form-icon" src="../icons/small/herbs_forbs.png" alt=""> Herb/Forb</span></a></td></tr>
+<tr data-form="badge-herb"><td class="sci"><a href="LYJA.html">Lygodium japonicum</a></td><td class="c1"><a href="LYJA.html">Japanese climbing fern <span class="badge badge-herb"><img class="form-icon" src="../icons/small/herbs_forbs.png" alt=""> Herb/Forb</span></a></td></tr>
+<tr data-form="badge-herb"><td class="sci"><a href="PUMO.html">Pueraria montana</a></td><td class="c1"><a href="PUMO.html">Kudzu <span class="badge badge-herb"><img class="form-icon" src="../icons/small/herbs_forbs.png" alt=""> Herb/Forb</span></a></td></tr>
+<tr data-form="badge-herb"><td class="sci"><a href="EUES.html">Euphorbia esula</a></td><td class="c1"><a href="EUES.html">Leafy spurge <span class="badge badge-herb"><img class="form-icon" src="../icons/small/herbs_forbs.png" alt=""> Herb/Forb</span></a></td></tr>
+<tr data-form="badge-herb"><td class="sci"><a href="ALTR3.html">Allium tricoccum</a></td><td class="c1"><a href="ALTR3.html">Ramp <span class="badge badge-herb"><img class="form-icon" src="../icons/small/herbs_forbs.png" alt=""> Herb/Forb</span></a></td></tr>
+<tr data-form="badge-herb"><td class="sci"><a href="LECU.html">Lespedeza cuneata</a></td><td class="c1"><a href="LECU.html">Sericea lespedeza <span class="badge badge-herb"><img class="form-icon" src="../icons/small/herbs_forbs.png" alt=""> Herb/Forb</span></a></td></tr>
+<tr data-form="badge-herb"><td class="sci"><a href="LIBO3.html">Linnaea borealis</a></td><td class="c1"><a href="LIBO3.html">Twinflower <span class="badge badge-herb"><img class="form-icon" src="../icons/small/herbs_forbs.png" alt=""> Herb/Forb</span></a></td></tr>
+<tr data-form="badge-herb"><td class="sci"><a href="FRVI.html">Fragaria virginiana</a></td><td class="c1"><a href="FRVI.html">Virginia strawberry <span class="badge badge-herb"><img class="form-icon" src="../icons/small/herbs_forbs.png" alt=""> Herb/Forb</span></a></td></tr>
+<tr data-form="badge-herb"><td class="sci"><a href="PTAQ.html">Pteridium aquilinum</a></td><td class="c1"><a href="PTAQ.html">Western brackenfern <span class="badge badge-herb"><img class="form-icon" src="../icons/small/herbs_forbs.png" alt=""> Herb/Forb</span></a></td></tr>
+<tr data-form="badge-herb"><td class="sci"><a href="THOC.html">Thalictrum occidentale</a></td><td class="c1"><a href="THOC.html">Western meadow-rue <span class="badge badge-herb"><img class="form-icon" src="../icons/small/herbs_forbs.png" alt=""> Herb/Forb</span></a></td></tr>
+<tr data-form="badge-herb"><td class="sci"><a href="POMU.html">Polystichum munitum</a></td><td class="c1"><a href="POMU.html">Western swordfern <span class="badge badge-herb"><img class="form-icon" src="../icons/small/herbs_forbs.png" alt=""> Herb/Forb</span></a></td></tr>
+<tr data-form="badge-herb"><td class="sci"><a href="ARNU2.html">Aralia nudicaulis</a></td><td class="c1"><a href="ARNU2.html">Wild sarsaparilla <span class="badge badge-herb"><img class="form-icon" src="../icons/small/herbs_forbs.png" alt=""> Herb/Forb</span></a></td></tr>
+<tr data-form="badge-herb"><td class="sci"><a href="FRVE.html">Fragaria vesca</a></td><td class="c1"><a href="FRVE.html">Woodland strawberry <span class="badge badge-herb"><img class="form-icon" src="../icons/small/herbs_forbs.png" alt=""> Herb/Forb</span></a></td></tr>
+<tr data-form="badge-herb"><td class="sci"><a href="CESO3.html">Centaurea solstitialis</a></td><td class="c1"><a href="CESO3.html">Yellow star-thistle <span class="badge badge-herb"><img class="form-icon" src="../icons/small/herbs_forbs.png" alt=""> Herb/Forb</span></a></td></tr>
+<tr data-form="badge-grass"><td class="sci"><a href="FEAR2.html">Festuca arizonica</a></td><td class="c1"><a href="FEAR2.html">Arizona fescue <span class="badge badge-grass"><img class="form-icon" src="../icons/small/grasses.png" alt=""> Grass</span></a></td></tr>
+<tr data-form="badge-grass"><td class="sci"><a href="ANGE.html">Andropogon gerardii</a></td><td class="c1"><a href="ANGE.html">Big bluestem <span class="badge badge-grass"><img class="form-icon" src="../icons/small/grasses.png" alt=""> Grass</span></a></td></tr>
+<tr data-form="badge-grass"><td class="sci"><a href="BOER4.html">Bouteloua eriopoda</a></td><td class="c1"><a href="BOER4.html">Black grama <span class="badge badge-grass"><img class="form-icon" src="../icons/small/grasses.png" alt=""> Grass</span></a></td></tr>
+<tr data-form="badge-grass"><td class="sci"><a href="BOGR2.html">Bouteloua gracilis</a></td><td class="c1"><a href="BOGR2.html">Blue grama <span class="badge badge-grass"><img class="form-icon" src="../icons/small/grasses.png" alt=""> Grass</span></a></td></tr>
+<tr data-form="badge-grass"><td class="sci"><a href="ELGL.html">Elymus glaucus</a></td><td class="c1"><a href="ELGL.html">Blue wildrye <span class="badge badge-grass"><img class="form-icon" src="../icons/small/grasses.png" alt=""> Grass</span></a></td></tr>
+<tr data-form="badge-grass"><td class="sci"><a href="PSSP6.html">Pseudoroegneria spicata</a></td><td class="c1"><a href="PSSP6.html">Bluebunch wheatgrass <span class="badge badge-grass"><img class="form-icon" src="../icons/small/grasses.png" alt=""> Grass</span></a></td></tr>
+<tr data-form="badge-grass"><td class="sci"><a href="BRCA5.html">Bromus carinatus</a></td><td class="c1"><a href="BRCA5.html">California brome <span class="badge badge-grass"><img class="form-icon" src="../icons/small/grasses.png" alt=""> Grass</span></a></td></tr>
+<tr data-form="badge-grass"><td class="sci"><a href="BRTE.html">Bromus tectorum</a></td><td class="c1"><a href="BRTE.html">Cheatgrass <span class="badge badge-grass"><img class="form-icon" src="../icons/small/grasses.png" alt=""> Grass</span></a></td></tr>
+<tr data-form="badge-grass"><td class="sci"><a href="BRVU.html">Bromus vulgaris</a></td><td class="c1"><a href="BRVU.html">Columbia brome <span class="badge badge-grass"><img class="form-icon" src="../icons/small/grasses.png" alt=""> Grass</span></a></td></tr>
+<tr data-form="badge-grass"><td class="sci"><a href="CAGE2.html">Carex geyeri</a></td><td class="c1"><a href="CAGE2.html">Geyer's sedge <span class="badge badge-grass"><img class="form-icon" src="../icons/small/grasses.png" alt=""> Sedge</span></a></td></tr>
+<tr data-form="badge-grass"><td class="sci"><a href="FEID.html">Festuca idahoensis</a></td><td class="c1"><a href="FEID.html">Idaho fescue <span class="badge badge-grass"><img class="form-icon" src="../icons/small/grasses.png" alt=""> Grass</span></a></td></tr>
+<tr data-form="badge-grass"><td class="sci"><a href="POPR.html">Poa pratensis</a></td><td class="c1"><a href="POPR.html">Kentucky bluegrass <span class="badge badge-grass"><img class="form-icon" src="../icons/small/grasses.png" alt=""> Grass</span></a></td></tr>
+<tr data-form="badge-grass"><td class="sci"><a href="TACA8.html">Taeniatherum caput-medusae</a></td><td class="c1"><a href="TACA8.html">Medusahead <span class="badge badge-grass"><img class="form-icon" src="../icons/small/grasses.png" alt=""> Grass</span></a></td></tr>
+<tr data-form="badge-grass"><td class="sci"><a href="MUMO.html">Muhlenbergia montana</a></td><td class="c1"><a href="MUMO.html">Mountain muhly <span class="badge badge-grass"><img class="form-icon" src="../icons/small/grasses.png" alt=""> Grass</span></a></td></tr>
+<tr data-form="badge-grass"><td class="sci"><a href="MIVI.html">Microstegium vimineum</a></td><td class="c1"><a href="MIVI.html">Nepalese browntop <span class="badge badge-grass"><img class="form-icon" src="../icons/small/grasses.png" alt=""> Grass</span></a></td></tr>
+<tr data-form="badge-grass"><td class="sci"><a href="CAPE6.html">Carex pensylvanica</a></td><td class="c1"><a href="CAPE6.html">Pennsylvania sedge <span class="badge badge-grass"><img class="form-icon" src="../icons/small/grasses.png" alt=""> Sedge</span></a></td></tr>
+<tr data-form="badge-grass"><td class="sci"><a href="CARU.html">Calamagrostis rubescens</a></td><td class="c1"><a href="CARU.html">Pinegrass <span class="badge badge-grass"><img class="form-icon" src="../icons/small/grasses.png" alt=""> Grass</span></a></td></tr>
+<tr data-form="badge-grass"><td class="sci"><a href="PHAR3.html">Phalaris arundinacea</a></td><td class="c1"><a href="PHAR3.html">Reed canarygrass <span class="badge badge-grass"><img class="form-icon" src="../icons/small/grasses.png" alt=""> Grass</span></a></td></tr>
+<tr data-form="badge-grass"><td class="sci"><a href="CARO5.html">Carex rossii</a></td><td class="c1"><a href="CARO5.html">Ross' sedge <span class="badge badge-grass"><img class="form-icon" src="../icons/small/grasses.png" alt=""> Sedge</span></a></td></tr>
+<tr data-form="badge-grass"><td class="sci"><a href="POSE.html">Poa secunda</a></td><td class="c1"><a href="POSE.html">Sandberg bluegrass <span class="badge badge-grass"><img class="form-icon" src="../icons/small/grasses.png" alt=""> Grass</span></a></td></tr>
+<tr data-form="badge-grass"><td class="sci"><a href="BOCU.html">Bouteloua curtipendula</a></td><td class="c1"><a href="BOCU.html">Sideoats grama <span class="badge badge-grass"><img class="form-icon" src="../icons/small/grasses.png" alt=""> Grass</span></a></td></tr>
+<tr data-form="badge-grass"><td class="sci"><a href="BRIN2.html">Bromus inermis</a></td><td class="c1"><a href="BRIN2.html">Smooth brome <span class="badge badge-grass"><img class="form-icon" src="../icons/small/grasses.png" alt=""> Grass</span></a></td></tr>
+<tr data-form="badge-grass"><td class="sci"><a href="ELEL5.html">Elymus elymoides</a></td><td class="c1"><a href="ELEL5.html">Squirreltail <span class="badge badge-grass"><img class="form-icon" src="../icons/small/grasses.png" alt=""> Grass</span></a></td></tr>
+<tr data-form="badge-grass"><td class="sci"><a href="SCAR7.html">Schedonorus arundinaceus</a></td><td class="c1"><a href="SCAR7.html">Tall fescue <span class="badge badge-grass"><img class="form-icon" src="../icons/small/grasses.png" alt=""> Grass</span></a></td></tr>
+<tr data-form="badge-grass"><td class="sci"><a href="FEOC.html">Festuca occidentalis</a></td><td class="c1"><a href="FEOC.html">Western fescue <span class="badge badge-grass"><img class="form-icon" src="../icons/small/grasses.png" alt=""> Grass</span></a></td></tr></tbody></table></div></aside><div id="viewer"><div class="species-info-card"><div class="card-header"><img class="card-photo" src="../photos/thumbs/ACRU_160.jpg" alt="Red maple photo" width="68" height="68"><div class="card-header-meta"><div class="card-title">Red maple</div><div class="card-sci"><i>Acer rubrum</i></div><div class="card-badges"><span class="badge badge-tree"><img class="form-icon" src="../icons/small/hardwood_tree.png" alt=""> Broadleaf tree</span></div></div></div><p class="photo-credit card-credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Wilsonville_tree_fall_2007.JPG" target="_blank" rel="noopener" title="Photo: M.O. Stevens, CC BY-SA 4.0, via Wikimedia Commons">M.O. Stevens</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a>, via Wikimedia Commons</p><table class="card-stats-table"><tbody><tr><th>Plant form:</th><td><strong>Broadleaf tree</strong></td></tr><tr><th>Max age:</th><td title="Source: Eastern OLDLIST https://www.ldeo.columbia.edu/~adk/oldlisteast/ (300 yr, Catskills NY); Virginia Tech Dendrology tree lifespans, after Loehle 1988 https://bigtree.cnre.vt.edu/lifespan.html">~300 years</td></tr><tr><th>Max height:</th><td title="Source: FEIS (Tirmenstein 1991); 30-90 ft https://research.fs.usda.gov/feis/species-reviews/acerub">28 m (90 ft)</td></tr><tr><th>Origin:</th><td title="Source: USDA PLANTS native status https://plants.usda.gov/plant-profile/ACRU; FEIS (Tirmenstein 1991); range https://research.fs.usda.gov/feis/species-reviews/acerub">Native (Eastern North America)</td></tr><tr><th>Importance:</th><td title="Source: FEIS (Tirmenstein 1991) https://research.fs.usda.gov/feis/species-reviews/acerub">Abundant timber &amp; pulp, winter deer browse</td></tr><tr><th>Plot type:</th><td>Tree tally: 24-ft subplots and 6.8-ft microplots</td></tr><tr><th>FIA plots:</th><td>Found on 50,806 of 167,978 plots (30.2%)</td></tr></tbody></table><div class="card-actions"><a class="cog-btn" href="../../#sp=ACRU" target="_blank" style="margin-left:6px; display:inline-block; padding:3px 8px; border-radius:4px; background:#7a2e0b; color:#fff !important; font-size:0.75rem; font-weight:600; text-decoration:none !important;" title="Open this species in the interactive COG Leaflet map">Interactive Map &nearr;</a><a class="usda-btn" href="https://plants.sc.egov.usda.gov/plant-profile/ACRU" target="_blank" rel="noopener">USDA PLANTS Profile &nearr;</a></div></div><div class="annual-card"><details open><summary>Share of plots in this species' range recording it, 2000-2023</summary><img class="annual" src="../img/ACRU_annual.png" alt="Line graph of the yearly share of plots in range recording Red maple, 2000-2023, ranging from 48.49% to 57.10%" width="1040" height="600"><p class="annual-caption">Each year's share combines state-level shares with fixed state weights, counting only plots inside the species' mapped range (plus 20 km around its records). Band: 90% bootstrap interval. Hollow points: years when states holding over a quarter of the weight were not measured.</p><details class="annual-table"><summary>Yearly numbers</summary><table><thead><tr><th>Year</th><th>Plots in range</th><th>Plots recording</th><th>Share</th><th>90% interval</th><th>Flag</th></tr></thead><tbody><tr><td>2000</td><td>11,264</td><td>6,316</td><td>55.45%</td><td>54.10% – 56.91%</td><td class="flag"></td></tr><tr><td>2001</td><td>13,665</td><td>7,663</td><td>52.86%</td><td>52.19% – 53.57%</td><td class="flag"></td></tr><tr><td>2002</td><td>15,021</td><td>8,434</td><td>56.00%</td><td>55.27% – 56.72%</td><td class="flag"></td></tr><tr><td>2003</td><td>17,023</td><td>9,304</td><td>55.04%</td><td>54.46% – 55.64%</td><td class="flag"></td></tr><tr><td>2004</td><td>15,409</td><td>8,322</td><td>54.65%</td><td>54.05% – 55.34%</td><td class="flag"></td></tr><tr><td>2005</td><td>13,639</td><td>7,491</td><td>57.10%</td><td>56.48% – 57.67%</td><td class="flag"></td></tr><tr><td>2006</td><td>15,903</td><td>8,906</td><td>56.18%</td><td>54.89% – 57.36%</td><td class="flag"></td></tr><tr><td>2007</td><td>16,821</td><td>9,321</td><td>55.27%</td><td>54.65% – 55.87%</td><td class="flag"></td></tr><tr><td>2008</td><td>14,851</td><td>8,139</td><td>54.49%</td><td>53.79% – 55.16%</td><td class="flag"></td></tr><tr><td>2009</td><td>14,414</td><td>7,817</td><td>53.91%</td><td>53.24% – 54.53%</td><td class="flag"></td></tr><tr><td>2010</td><td>15,062</td><td>8,044</td><td>53.92%</td><td>53.29% – 54.56%</td><td class="flag"></td></tr><tr><td>2011</td><td>14,961</td><td>8,174</td><td>54.68%</td><td>54.09% – 55.29%</td><td class="flag"></td></tr><tr><td>2012</td><td>14,519</td><td>7,793</td><td>54.46%</td><td>53.76% – 55.12%</td><td class="flag"></td></tr><tr><td>2013</td><td>13,435</td><td>7,161</td><td>54.35%</td><td>53.69% – 55.04%</td><td class="flag"></td></tr><tr><td>2014</td><td>12,770</td><td>6,786</td><td>53.85%</td><td>53.11% – 54.58%</td><td class="flag"></td></tr><tr><td>2015</td><td>11,937</td><td>6,357</td><td>54.15%</td><td>53.36% – 54.89%</td><td class="flag"></td></tr><tr><td>2016</td><td>11,971</td><td>6,367</td><td>53.38%</td><td>52.72% – 54.16%</td><td class="flag"></td></tr><tr><td>2017</td><td>13,077</td><td>6,854</td><td>52.99%</td><td>52.31% – 53.65%</td><td class="flag"></td></tr><tr><td>2018</td><td>12,554</td><td>6,699</td><td>54.02%</td><td>53.34% – 54.69%</td><td class="flag"></td></tr><tr><td>2019</td><td>13,028</td><td>6,809</td><td>53.01%</td><td>52.35% – 53.68%</td><td class="flag"></td></tr><tr><td>2020</td><td>12,576</td><td>6,641</td><td>53.89%</td><td>53.21% – 54.61%</td><td class="flag"></td></tr><tr><td>2021</td><td>11,301</td><td>5,928</td><td>52.83%</td><td>51.99% – 53.61%</td><td class="flag"></td></tr><tr><td>2022</td><td> 9,476</td><td>4,928</td><td>52.34%</td><td>51.42% – 53.20%</td><td class="flag"></td></tr><tr><td>2023</td><td> 5,381</td><td>2,490</td><td>48.49%</td><td>47.18% – 49.78%</td><td class="flag">Low state coverage</td></tr></tbody></table></details></details></div><img id="map" src="../img/ACRU.png" alt="Observed range map for Red maple" draggable="false"></div></div><script>
+  // Map zoom and pan
+  const view = document.getElementById('viewer'), img = document.getElementById('map');
+  let s = 1, tx = 0, ty = 0; const pts = new Map(); let last = null;
+  const apply = () => img.style.transform = `translate(${tx}px, ${ty}px) scale(${s})`;
+  const fit = () => { s = Math.min(view.clientWidth / img.naturalWidth, view.clientHeight / img.naturalHeight);
+    tx = (view.clientWidth - img.naturalWidth * s) / 2; ty = (view.clientHeight - img.naturalHeight * s) / 2; apply(); };
+  const zoomAt = (f, cx, cy) => { const ns = Math.min(Math.max(s * f, 0.05), 8); tx = cx - (cx - tx) * ns / s; ty = cy - (cy - ty) * ns / s; s = ns; apply(); };
+  img.complete ? fit() : img.addEventListener('load', fit);
+  window.addEventListener('resize', fit);
+  document.getElementById('reset').addEventListener('click', fit);
+  document.getElementById('zin').addEventListener('click', () => zoomAt(1.4, view.clientWidth / 2, view.clientHeight / 2));
+  document.getElementById('zout').addEventListener('click', () => zoomAt(1 / 1.4, view.clientWidth / 2, view.clientHeight / 2));
+  view.addEventListener('wheel', e => { if(e.target.closest('.species-info-card, .annual-card')) return; e.preventDefault(); const b = view.getBoundingClientRect(); zoomAt(e.deltaY < 0 ? 1.15 : 1 / 1.15, e.clientX - b.left, e.clientY - b.top); }, { passive: false });
+  view.addEventListener('pointerdown', e => {
+    // leave clicks on the info card and graph panel to their own links and buttons
+    if(e.target.closest('.species-info-card, .annual-card')) return;
+    view.setPointerCapture(e.pointerId); pts.set(e.pointerId, [e.clientX, e.clientY]); view.style.cursor = 'grabbing';
+  });
+  view.addEventListener('pointermove', e => {
+    if(!pts.has(e.pointerId)) return;
+    const prev = pts.get(e.pointerId); pts.set(e.pointerId, [e.clientX, e.clientY]);
+    if(pts.size === 1){ tx += e.clientX - prev[0]; ty += e.clientY - prev[1]; apply(); }
+    else if(pts.size === 2){ const [a, b] = Array.from(pts.values()); const d = Math.hypot(a[0] - b[0], a[1] - b[1]);
+      const r = view.getBoundingClientRect(); if(last) zoomAt(d / last, (a[0] + b[0]) / 2 - r.left, (a[1] + b[1]) / 2 - r.top); last = d; }
+  });
+  const up = e => { pts.delete(e.pointerId); if(pts.size < 2) last = null; if(pts.size === 0) view.style.cursor = 'grab'; };
+  view.addEventListener('pointerup', up); view.addEventListener('pointercancel', up);
+
+  // Sidebar search and form filter
+  const searchInput = document.getElementById('pane-search');
+  const paneRows = Array.from(document.querySelectorAll('#pane-list tbody tr'));
+  const paneCount = document.getElementById('pane-count');
+  const paneCheckboxes = Array.from(document.querySelectorAll('.pane-form-cb'));
+
+  function filterSidebarRows() {
+    const words = (searchInput ? searchInput.value : '').toLowerCase().split(/\s+/).filter(w => w);
+    const activeBadges = paneCheckboxes.filter(cb => cb.checked).map(cb => cb.value);
+    let shown = 0;
+    paneRows.forEach(r => {
+      const bClass = r.dataset.form || '';
+      const formOk = activeBadges.indexOf(bClass) !== -1;
+      const text = r.textContent.toLowerCase();
+      const textOk = words.every(w => text.indexOf(w) !== -1);
+      const ok = formOk && textOk;
+      r.style.display = ok ? '' : 'none';
+      if(ok) shown++;
+    });
+    if(paneCount) paneCount.textContent = shown + ' of ' + paneRows.length + ' species';
+  }
+  if(searchInput) searchInput.addEventListener('input', filterSidebarRows);
+  paneCheckboxes.forEach(cb => cb.addEventListener('change', filterSidebarRows));
+
+  // Sidebar toggle
+  const toggleBtn = document.getElementById('toggle-sidebar');
+  const sidebar = document.getElementById('sidebar');
+  if(toggleBtn && sidebar){
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('collapsed');
+      setTimeout(fit, 220);
+    });
+  }
+
+  // Scroll the current species into view in the sidebar
+  const activeRow = document.querySelector('#pane-list tr.active');
+  if(activeRow){
+    activeRow.scrollIntoView({ block: 'center', behavior: 'instant' });
+  }
+</script></body></html>

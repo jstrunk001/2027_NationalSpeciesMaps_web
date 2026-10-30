@@ -239,7 +239,10 @@
         } else {
           body = v + "% of plots in this " + meta.radius_km + " km neighborhood had this species.";
         }
-        L.popup().setLatLng(e.latlng).setContent("<b>" + sp.label + "</b><br>" + body).openOn(map);
+        var head = "<b>" + sp.label + "</b><br>" + (sp.scientific ? "<i>" + sp.scientific + "</i><br>" : "");
+        var foot = sp.plot_type ? "<br><span class='hint'>" + sp.plot_type + "</span>" : "";
+        var profileLink = "<br><a href='atlas/species/" + sp.symbol + ".html' target='_blank' style='display:inline-block; margin-top:5px; color:#7a2e0b; font-weight:600; text-decoration:underline;'>View Species Atlas Profile &nearr;</a>";
+        L.popup().setLatLng(e.latlng).setContent(head + body + foot + profileLink).openOn(map);
       }).catch(function(err) {
         L.popup().setLatLng(e.latlng).setContent("Could not read the value here: " + err.message).openOn(map);
       });
@@ -393,6 +396,11 @@
         L.DomEvent.disableScrollPropagation(panel);
 
         //  a. reference layers
+                // Top catalog button
+        var catBox = el("div");
+        catBox.innerHTML = "<a href='atlas/index.html' style='display:block; text-align:center; padding:5px 8px; margin-bottom:8px; background:#7a2e0b; color:#fff; text-decoration:none; border-radius:4px; font-weight:600; font-size:11px; box-shadow:0 1px 3px rgba(0,0,0,0.25);'>&#128218; Species Atlas Catalog (100) &rarr;</a>";
+        panel.appendChild(catBox);
+
         var refSec = el("div", "panel-section");
         refSec.appendChild(el("div", "panel-title", "Reference layers"));
         Object.keys(refLayers).forEach(function(key) {
@@ -418,7 +426,7 @@
         spSec.appendChild(el("div", "panel-title", "Species ranges (by plant form)"));
         var search = el("input");
         search.type = "text";
-        search.placeholder = "Search species, symbol, or plant form...";
+        search.placeholder = "Search common or scientific name, symbol...";
         spSec.appendChild(search);
 
         var filterBar = el("div", "form-filter");
@@ -470,7 +478,7 @@
           lbl.appendChild(document.createTextNode(sp.common + " "));
           lbl.appendChild(el("span", "species-symbol", sp.symbol));
           (groups[sp.form] || groups[meta.forms[0].form]).div.appendChild(lbl);
-          items.push({ sp: sp, el: lbl, radio: radio, text: (sp.common + " " + sp.symbol + " " + sp.form).toLowerCase() });
+          items.push({ sp: sp, el: lbl, radio: radio, text: (sp.common + " " + sp.symbol + " " + (sp.scientific || "") + " " + sp.form).toLowerCase() });
         });
 
         list.addEventListener("change", function(e) {
@@ -574,7 +582,15 @@
         w.style.display = (!sp || w.getAttribute("data-form") === sp.form) ? "" : "none";
       });
       var nm = document.getElementById("legend-species");
-      if(nm) nm.textContent = sp ? sp.label : "No species selected";
+      if(nm) {
+        if(sp) {
+          nm.innerHTML = "<b>" + sp.label + "</b> (" + sp.symbol + ")" +
+            (sp.scientific ? "<br><i>" + sp.scientific + "</i>" : "") +
+            "<br><a href='atlas/species/" + sp.symbol + ".html' target='_blank' style='display:inline-block; margin-top:3px; font-size:11px; color:#7a2e0b; font-weight:600; text-decoration:underline;'>View Species Atlas Profile &nearr;</a>";
+        } else {
+          nm.textContent = "No species selected";
+        }
+      }
     }
 
     function showNlcdLegend(on) {
@@ -592,12 +608,16 @@
       onAdd: function() {
         var box = el("div", "info");
         box.innerHTML =
-          "<b>Observed plant ranges (pilot)</b><br>" +
+          "<b>Observed Plant Ranges (100 Species)</b><br>" +
+            "<span style='display:inline-block; margin-bottom:4px; font-size:10px; color:#555;'>99 Species Mapped on 1 km Grid</span><br>" +
           "Share of surveyed FIA plots with the species,<br>" +
           meta.radius_km + " km window on a 1 km grid; latest plot visits " + meta.years[0] + "-" + meta.years[1] + ".<br>" +
           "Data: FIA DataMart (public plot coordinates).<br>" +
           "Plots: " + numberWithCommas(meta.n_forest) + " forest, " + numberWithCommas(meta.n_nonforest) + " nonforest.<br>" +
-          "Click the map to read the selected species' value.";
+          "Click the map to read the selected species' value." +
+            "<div style='margin-top:7px; padding-top:6px; border-top:1px solid #ddd;'>" +
+            "<a href='atlas/index.html' style='display:inline-flex; align-items:center; gap:5px; padding:4px 9px; background:#7a2e0b; color:#fff; text-decoration:none; border-radius:4px; font-weight:600; font-size:11px;'>" +
+            "<span>&#128218; Species Atlas Catalog (100 Species) &rarr;</span></a></div>";
         return box;
       }
     });
